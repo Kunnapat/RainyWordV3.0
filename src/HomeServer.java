@@ -51,8 +51,9 @@ public class HomeServer extends JFrame{
     String[] luxury = {"LouisVuitton","Gucci", "Rolex","Moschino","Hermes","Prada","Givenchy","Chanel","BVLGARI","GiorgioArmani","BOSS","BURBERRY","MARCJACOBS","ChristianDior","Versace","RalphLauren","Patek","Panerai","TomFord","Swarovski","Valentino","MichaelKors","Celine","Vertu","CalvinKlein"};
     String[] country = {"UnitedStates","China", "India","Japan","Germany","Russia","Brazil","UnitedKingdom","France","Mexico","Italy","SouthKorea","Canada","Spain","Indonesia","Turkey","Australia","Iran","SaudiArabia","Poland","Argentina","Netherlands","Thailand","SouthAfrica","Pakistan"};
     String[] pp = {"public","static", "void","main","string","args","int","long","double","char","private","for","if","and","or","while","null","System","println","new","break","thread","runnable","action","parse"};
+    String[] musictheory = {"Accelerando","Adagio", "Canon","Crescendo","Da Capo","Dolce","Forte","Fortissimo","Fugue","Major","Presto","Quarter","Rubato","Octave","Symphony","Treble","Vibrato","Sharp","Moderato","Grandioso","Decrescendo","Harmonic Major","Harmonic Minor","Mixolydian","Mezzo"};
 	public HomeServer(){
-		super("Server");
+		super("Server Home");
 		createTopPanel();
 		createCatPanel();
 		createBottomPanel();
@@ -78,9 +79,12 @@ public class HomeServer extends JFrame{
 					}
 					if(caseSensitivity){
 						Server.oos.writeObject("case sensitive");
+						GameServer.caseSensitivity = true;
 					}
 					GameServer.fallSpeed = fallingSpeed;
 					Server.oos.writeObject("Speed_"+fallingSpeed);
+					GameServer.serverScore = 0;
+					GameServer.clientScore = 0;
 					GameServer game = GameServer.createAndShowGUI(wordList);
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
@@ -127,6 +131,11 @@ public class HomeServer extends JFrame{
 				}else if(s.equals("Programming")){
 					for(int i = 0; i < pp.length; i++){
 						wordList.insert(new Word(temp*-200,pp[i],fallingSpeed), itr1);
+						temp++;
+					}
+				}else if(s.equals("Music")){
+					for(int i = 0; i < pp.length; i++){
+						wordList.insert(new Word(temp*-200,musictheory[i],fallingSpeed), itr1);
 						temp++;
 					}
 				}
@@ -183,6 +192,7 @@ public class HomeServer extends JFrame{
 				catBox.addItem("Luxury");
 				catBox.addItem("Country");
 				catBox.addItem("Programming");
+				catBox.addItem("Music");
 				catBox.setForeground(Color.GREEN);
 				catBox.setBackground(Color.GRAY);
 				catBox.setPreferredSize(new Dimension(100,50));

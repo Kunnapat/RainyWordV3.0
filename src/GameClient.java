@@ -19,6 +19,7 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.sql.Date;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -39,6 +40,7 @@ public class GameClient extends JFrame{
 	static JLabel clientNameLabel;
 	static JLabel serverScoreLabel;
 	static JLabel clientScoreLabel;
+	JLabel timerLabel;
 	static boolean caseSensitivity = false;
 	JFrame popUpFrame;
 	static LinkedList wordList = new LinkedList();
@@ -53,21 +55,33 @@ public class GameClient extends JFrame{
     static int serverScore = 0;
     static int clientScore = 0;
     static int fallSpeed;
-    
+    ActionListener al; 
+    static javax.swing.Timer t;
+    static int timeLeft;
+    final int gameDuration = 30000;
     static Thread t2 = new Thread(new Runnable(){
 
 		@Override
 		public void run() {
 			while(true){
-				String s = inputField.getText().toLowerCase();
+				String s = "";
+				if(caseSensitivity){
+					s = inputField.getText();
+				}else{
+					s = inputField.getText().toLowerCase();
+				}
+				
 				if(!s.equals("")){
 					LinkedListItr itr = wordList.first();
 					while(!itr.isPastEnd()){
 						Word w = itr.current.element;
-						String temp = w.word.toLowerCase();
+						String temp = "";
+						if(caseSensitivity){
+							temp = w.word;
+						}else{
+							temp = w.word.toLowerCase();
+						}
 						if(temp.startsWith(s)){
-//							LinkedListItr itr1 = coloredList.zeroth();
-//							coloredList.insert(new Word(w.wordXLocation,w.wordYLocation,s,w.fallSpeed, Color.RED), itr1);
 							itr.current.element.changeColor(Color.RED);
 						}
 						itr.advance();
@@ -81,7 +95,7 @@ public class GameClient extends JFrame{
     });
     
 	public GameClient(){
-		super("Rainy Word V1.1");
+		super("=================Rainy Word V3.0=================");
 		createGamePanel();
 		createOptionPanel();
 		createInfoPanel();
@@ -143,12 +157,13 @@ public class GameClient extends JFrame{
 						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
-					if(wordList.isEmpty()){
-						createPopUpFrame();
-						gameStarted = false;
-						repaint();
-						popUpFrame.setVisible(true);
-					}
+//					if(timeLeft == 0 ){
+//						t.stop();
+//						createPopUpFrame();
+//						gameStarted = false;
+//						repaint();
+//						popUpFrame.setVisible(true);
+//					}
 				}
 				
 			}
@@ -166,6 +181,8 @@ public class GameClient extends JFrame{
 					gameStarted = true;
 					t1.start();
 					t2.start();
+					t = new javax.swing.Timer(1000, al);
+					t.start();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
@@ -235,9 +252,30 @@ public class GameClient extends JFrame{
 			
 		});
 		optionPanel.add(inputField);
-	
+		createTimerLabel();
+		optionPanel.add(timerLabel);
 		
 	}
+	private void createTimerLabel() {
+	    final java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("mm : ss");
+	    timerLabel = new JLabel(sdf.format(new Date(gameDuration)),JLabel.CENTER);
+	    int x = 0;
+	    al = new ActionListener(){	
+	      int xTime = gameDuration - 1000;
+	      public void actionPerformed(ActionEvent ae){
+	        timerLabel.setText(sdf.format(new Date(xTime)));
+	        if(xTime == 0){
+	        	t.stop();
+	        	createPopUpFrame();
+				gameStarted = false;
+				repaint();
+				popUpFrame.setVisible(true);
+	        }
+	        xTime -= 1000;}
+	    };
+	    
+	}
+
 	private void addClientScore() throws IOException {
 		clientScore = clientScore + 1;
 		clientScoreLabel.setText("       Score: " + clientScore+"           ");
@@ -262,12 +300,23 @@ public class GameClient extends JFrame{
 
 	private void createPopUpFrame() {
 		popUpFrame = new JFrame();
-		popUpFrame.setSize(400, 150);
+		popUpFrame.setSize(600, 150);
 		popUpFrame.setResizable(false);
 		popUpFrame.setLocationRelativeTo(null);
 		popUpFrame.setLayout(new GridLayout(3, 1));
-		JLabel winLabel = new JLabel("Your score is " + clientScore +".");
+		String s = "";
+		if(clientScore > serverScore){
+			s = "         Congratulation ! The winner is " + clientName;
+		}else if (clientScore < serverScore){
+			s = "         Awww... The winner is " + serverName;
+		}else{
+			s = "         It's a tie";
+		}
+		JLabel winLabel = new JLabel(s);
+
+		JLabel scoreLabel = new JLabel("               Score:  You " + clientScore + " - " + serverScore + " " + serverName+"               ");
 		popUpFrame.add(winLabel);
+		popUpFrame.add(scoreLabel);
 		JButton closeButton = new JButton("OK");
 		closeButton.addActionListener(new ActionListener(){
 

@@ -66,6 +66,7 @@ public class Client {
 					LinkedList list = (LinkedList) response;
 					HomeClient.wordList = list;
 					HomeClient.startButton.setEnabled(true);
+					HomeClient.label.setText("Server has set the game up");
 				}catch (Exception e){
 				}
 				try{

@@ -30,12 +30,13 @@ import javax.swing.JTextField;
 
 public class HomeClient extends JFrame{
 	static int windowWidth = 500;
-	static int windowHeight = 300;
+	static int windowHeight = 80;
     static JButton startButton;
 	JButton gameSetting;
     static ObjectInputStream ois;
+    JPanel mainPanel;
     static LinkedList wordList = new LinkedList();
-    
+    static JLabel label;
     
     
     static int fallSpeed;
@@ -44,14 +45,29 @@ public class HomeClient extends JFrame{
     
     
 	public HomeClient(){
-		super("Client");
+		super("Client Home");
+		createMainPanel();
+		this.add(mainPanel, BorderLayout.CENTER);
+		
+	}
+	
+
+
+	private void createMainPanel() {
+		mainPanel = new JPanel();
+		label = new JLabel("Please wait for server to set the game up");
+		label.setFont(new Font("Menlo",Font.PLAIN,12));
+		
 		startButton = new JButton("Start");
 		startButton.setEnabled(false);
+		startButton.setFont(new Font("Menlo",Font.PLAIN,12));
 		startButton.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				try {
+					GameClient.serverScore = 0;
+					GameClient.clientScore = 0;
 					GameClient game = GameClient.createAndShowGUI(wordList);
 				} catch (UnknownHostException e1) {
 					// TODO Auto-generated catch block
@@ -64,12 +80,11 @@ public class HomeClient extends JFrame{
 			}
 			
 		});
-		this.add(startButton,BorderLayout.NORTH);
-		gameSetting = new JButton("Setting");
-		this.add(gameSetting, BorderLayout.SOUTH);
+		mainPanel.add(label);
+		mainPanel.add(startButton);
 		
 	}
-	
+
 
 	public static HomeClient createAndShowGUI() throws UnknownHostException, IOException{
 		HomeClient frame = new HomeClient();

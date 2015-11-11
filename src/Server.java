@@ -84,6 +84,7 @@ public class Server {
 						GameServer.inputField.setEnabled(true);
 						GameServer.inputField.requestFocus();
 						GameServer.t2.start();
+						GameServer.startTimer();
 					}else if(response.equals("addClientScore")){
 						GameServer.addClientScore();
 					}
