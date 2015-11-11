@@ -79,11 +79,11 @@ public class Server {
 					}
 					if(response.equals("client ready")){
 						GameServer.t1.start();
-						GameServer.t2.start();
 						GameServer.gameStarted = true;
 						GameServer.inputField.setText("");
 						GameServer.inputField.setEnabled(true);
 						GameServer.inputField.requestFocus();
+						GameServer.t2.start();
 					}else if(response.equals("addClientScore")){
 						GameServer.addClientScore();
 					}

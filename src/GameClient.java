@@ -136,7 +136,6 @@ public class GameClient extends JFrame{
 			@Override
 			public void run() {
 				while(gameStarted){
-					
 					repaint();
 					try {
 						Thread.sleep(15);
@@ -161,16 +160,17 @@ public class GameClient extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Client.oos.writeObject("client ready");
+					startButton.setEnabled(false);
+					inputField.setText("");
+					inputField.setEnabled(true);
+					gameStarted = true;
+					t1.start();
+					t2.start();
 				} catch (IOException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
-				startButton.setEnabled(false);
-				inputField.setText("");
-				inputField.setEnabled(true);
-				t1.start();
-				t2.start();
-				gameStarted = true;
+				
 				
 			}
 			
