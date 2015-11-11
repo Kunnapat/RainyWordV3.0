@@ -266,7 +266,7 @@ public class GameClient extends JFrame{
 		popUpFrame.setResizable(false);
 		popUpFrame.setLocationRelativeTo(null);
 		popUpFrame.setLayout(new GridLayout(3, 1));
-		JLabel winLabel = new JLabel("Your score is " + clientScore + "/" + color.length +".");
+		JLabel winLabel = new JLabel("Your score is " + clientScore +".");
 		popUpFrame.add(winLabel);
 		JButton closeButton = new JButton("OK");
 		closeButton.addActionListener(new ActionListener(){
@@ -278,8 +278,26 @@ public class GameClient extends JFrame{
 			}
 			
 		});
+		JButton resetButton = new JButton("Play Again");
+		resetButton.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				popUpFrame.dispose();
+				try {
+					dispose();
+					HomeClient home = HomeClient.createAndShowGUI();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+			
+		});
 		closeButton.setSize(new Dimension(80,40));
 		popUpFrame.add(closeButton);
+		popUpFrame.add(resetButton);
 		popUpFrame.setVisible(false);
 		
 	}
