@@ -47,7 +47,7 @@ public class HomeServer extends JFrame{
     
     LinkedList wordList = new LinkedList();
     String[] color = {"red", "black", "white","grey","green","yellow","orange","purple","pink"};
-    String[] car = {"Honda","Toyota", "Nissan","Mazda","KIA","Hyundai","MercedesBenz","Acura","Lexus","Infiniti","Suzuki","Mitsubishi","Citroen","Chevrolet","Bentley","BMW","Holden","Daewoo","RollsRoyce","Audi","Volswagen","Peugeot","Mini","McLaren","Ford"};
+    String[] car = {"Honda","Toyota", "Nissan","Mazda","KIA","Hyundai","MercedesBenz","Acura","Lexus","Infiniti","Suzuki","Mitsubishi","Citroen","Chevrolet","Bentley","BMW","Holden","Daewoo","RollsRoyce","Audi","Volswagen","Peugeot","Mini","McLaren","Ford",};
     String[] luxury = {"LouisVuitton","Gucci", "Rolex","Moschino","Hermes","Prada","Givenchy","Chanel","BVLGARI","GiorgioArmani","BOSS","BURBERRY","MARCJACOBS","ChristianDior","Versace","RalphLauren","Patek","Panerai","TomFord","Swarovski","Valentino","MichaelKors","Celine","Vertu","CalvinKlein"};
     String[] country = {"UnitedStates","China", "India","Japan","Germany","Russia","Brazil","UnitedKingdom","France","Mexico","Italy","SouthKorea","Canada","Spain","Indonesia","Turkey","Australia","Iran","SaudiArabia","Poland","Argentina","Netherlands","Thailand","SouthAfrica","Pakistan"};
     String[] pp = {"public","static", "void","main","string","args","int","long","double","char","private","for","if","and","or","while","null","System","println","new","break","thread","runnable","action","parse"};
